@@ -5,12 +5,12 @@
  * @returns {Buffer}
  */
 export function bitShiftLeft(buffer) {
-	const shifted = Buffer.alloc(buffer.length);
+	const shifted = Buffer.allocUnsafe(buffer.length);
 	const last = buffer.length - 1;
-	for (let index = 0; index < last; index++) {
-		shifted[index] = buffer[index] << 1;
-		if (buffer[index + 1] & 0x80) {
-			shifted[index] += 0x01;
+	for (let i = 0; i < last; i++) {
+		shifted[i] = buffer[i] << 1;
+		if (buffer[i + 1] & 0x80) {
+			shifted[i] += 0x01;
 		}
 	}
 	shifted[last] = buffer[last] << 1;
@@ -24,9 +24,9 @@ export function bitShiftLeft(buffer) {
  */
 export function xor(a, b) {
 	const length = Math.min(a.length, b.length);
-	const output = Buffer.alloc(length);
-	for (let index = 0; index < length; index++) {
-		output[index] = a[index] ^ b[index];
+	const output = Buffer.allocUnsafe(length);
+	for (let i = 0; i < length; i++) {
+		output[i] = a[i] ^ b[i];
 	}
 	return output;
 }
