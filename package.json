@@ -1,13 +1,13 @@
 {
   "name": "node-aes-cmac",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A pure Node.js implementation of the AES-CMAC algorithm (NIST 800-38B / RFC 4493).",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "main": "src/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "node --test",
+    "ci": "biome ci ./src",
+    "lint": "biome lint ./src",
+    "format": "biome format --write ./src && biome lint --write ./src && biome check --write ./src"
   },
   "keywords": [
     "aes-cmac",
@@ -15,6 +15,9 @@
     "cmac"
   ],
   "author": "Allan Stewart",
+  "maintainers": [
+    "Niklas Mollenhauer"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/allan-stewart/node-aes-cmac.git"
@@ -22,12 +25,6 @@
   "bugs": {
     "url": "https://github.com/allan-stewart/node-aes-cmac/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/allan-stewart/node-aes-cmac/blob/master/LICENSE"
-    }
-  ],
   "license": "MIT",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
