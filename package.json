@@ -15,21 +15,22 @@
     "cmac"
   ],
   "author": "Allan Stewart",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/allan-stewart/node-aes-cmac.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/allan-stewart/node-aes-cmac.git"
   },
-  "bugs" : {
-    "url" : "https://github.com/allan-stewart/node-aes-cmac/issues"
+  "bugs": {
+    "url": "https://github.com/allan-stewart/node-aes-cmac/issues"
   },
-  "licenses" : [
+  "licenses": [
     {
-      "type" : "MIT",
-      "url" : "https://github.com/allan-stewart/node-aes-cmac/blob/master/LICENSE"
+      "type": "MIT",
+      "url": "https://github.com/allan-stewart/node-aes-cmac/blob/master/LICENSE"
     }
   ],
   "license": "MIT",
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "mocha": "^1.20.1"
   }
 }
