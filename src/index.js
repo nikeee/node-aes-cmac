@@ -20,5 +20,5 @@ function validateMessage(message) {
 	if (typeof message !== "string" && !(message instanceof Buffer)) {
 		throw new Error("The message must be provided as a string or Buffer.");
 	}
-	return message instanceof Buffer ? message : new Buffer(message);
+	return message instanceof Buffer ? message : Buffer.from(message);
 }

@@ -6,16 +6,16 @@ import * as index from "../index.js";
 describe("index (module entry point)", () => {
 	describe("aesCmac(key, message, [options])", () => {
 		it("performs the AES-CMAC algorithm", () => {
-			const key = new Buffer("2b7e151628aed2a6abf7158809cf4f3c", "hex");
-			const message = new Buffer("6bc1bee22e409f96e93d7e117393172a", "hex");
+			const key = Buffer.from("2b7e151628aed2a6abf7158809cf4f3c", "hex");
+			const message = Buffer.from("6bc1bee22e409f96e93d7e117393172a", "hex");
 			const result = index.aesCmac(key, message);
 			assert.equal(result, "070a16b46b4d4144f79bdd9dd04a287c");
 		});
 
 		it("can take a buffer or string as the key", () => {
 			const stringKey = "averysecretvalue";
-			const bufferKey = new Buffer(stringKey);
-			const message = new Buffer("some message");
+			const bufferKey = Buffer.from(stringKey);
+			const message = Buffer.from("some message");
 			assert.equal(
 				index.aesCmac(stringKey, message),
 				index.aesCmac(bufferKey, message),
@@ -25,7 +25,7 @@ describe("index (module entry point)", () => {
 		it("can take a buffer or string as the message", () => {
 			const key = "averysecretvalue";
 			const stringMessage = "some message";
-			const bufferMessage = new Buffer(stringMessage);
+			const bufferMessage = Buffer.from(stringMessage);
 			assert.equal(
 				index.aesCmac(key, stringMessage),
 				index.aesCmac(key, bufferMessage),

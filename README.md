@@ -58,8 +58,8 @@ var cmac = aesCmac(key, message);
 // cmac will be: '0125c538f8be7c4eea370f992a4ffdcb'
 
 // Example with buffers.
-var bufferKey = new Buffer('6b334d656e2a702f322e336a34616242', 'hex');
-var bufferMessage = new Buffer('this|is|a|test|message');
+var bufferKey = Buffer.from('6b334d656e2a702f322e336a34616242', 'hex');
+var bufferMessage = Buffer.from('this|is|a|test|message');
 var options = {returnAsBuffer: true};
 cmac = aesCmac(bufferKey, bufferMessage, options);
 // cmac will be a Buffer containing:

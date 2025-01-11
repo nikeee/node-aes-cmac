@@ -6,7 +6,9 @@ import * as bufferTools from "../buffer-tools.js";
 describe("buffer-tools", () => {
 	describe("bitShiftLeft", () => {
 		function testBitShiftLeft(input) {
-			return bufferTools.bitShiftLeft(new Buffer(input, "hex")).toString("hex");
+			return bufferTools
+				.bitShiftLeft(Buffer.from(input, "hex"))
+				.toString("hex");
 		}
 
 		it("returns a buffer bitshifted left 1 bit (buffer_value << 1)", () => {
@@ -25,7 +27,7 @@ describe("buffer-tools", () => {
 	describe("xor", () => {
 		function testXor(a, b) {
 			return bufferTools
-				.xor(new Buffer(a, "hex"), new Buffer(b, "hex"))
+				.xor(Buffer.from(a, "hex"), Buffer.from(b, "hex"))
 				.toString("hex");
 		}
 
@@ -43,7 +45,7 @@ describe("buffer-tools", () => {
 
 	describe("toBinaryString", () => {
 		function testToBinaryString(input) {
-			return bufferTools.toBinaryString(new Buffer(input, "hex"));
+			return bufferTools.toBinaryString(Buffer.from(input, "hex"));
 		}
 
 		it("returns the binary string representation of a buffer", () => {

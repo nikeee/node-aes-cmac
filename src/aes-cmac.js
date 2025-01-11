@@ -3,21 +3,21 @@ import * as crypto from "node:crypto";
 
 import * as bufferTools from "./buffer-tools.js";
 
-const const_Zero = new Buffer("00000000000000000000000000000000", "hex");
-const const_Rb = new Buffer("00000000000000000000000000000087", "hex");
-const const_blockSize = 16;
+const zero = Buffer.from("00000000000000000000000000000000", "hex");
+const rb = Buffer.from("00000000000000000000000000000087", "hex");
+const blockSize = 16;
 
 export function generateSubkeys(key) {
-	const l = aes(key, const_Zero);
+	const l = aes(key, zero);
 
 	let subkey1 = bufferTools.bitShiftLeft(l);
 	if (l[0] & 0x80) {
-		subkey1 = bufferTools.xor(subkey1, const_Rb);
+		subkey1 = bufferTools.xor(subkey1, rb);
 	}
 
 	let subkey2 = bufferTools.bitShiftLeft(subkey1);
 	if (subkey1[0] & 0x80) {
-		subkey2 = bufferTools.xor(subkey2, const_Rb);
+		subkey2 = bufferTools.xor(subkey2, rb);
 	}
 
 	return { subkey1: subkey1, subkey2: subkey2 };
@@ -31,7 +31,7 @@ function aes(key, message) {
 	const cipher = crypto.createCipheriv(
 		keyLengthToCipher[key.length],
 		key,
-		const_Zero,
+		zero,
 	);
 	const result = cipher.update(message);
 	cipher.final();
@@ -40,7 +40,7 @@ function aes(key, message) {
 
 export function aesCmac(key, message) {
 	const subkeys = exports.generateSubkeys(key);
-	let blockCount = Math.ceil(message.length / const_blockSize);
+	let blockCount = Math.ceil(message.length / blockSize);
 	let lastBlockCompleteFlag;
 	let lastBlock;
 	let lastBlockIndex;
@@ -49,7 +49,7 @@ export function aesCmac(key, message) {
 		blockCount = 1;
 		lastBlockCompleteFlag = false;
 	} else {
-		lastBlockCompleteFlag = message.length % const_blockSize === 0;
+		lastBlockCompleteFlag = message.length % blockSize === 0;
 	}
 	lastBlockIndex = blockCount - 1;
 
@@ -65,7 +65,7 @@ export function aesCmac(key, message) {
 		);
 	}
 
-	let x = new Buffer("00000000000000000000000000000000", "hex");
+	let x = Buffer.from("00000000000000000000000000000000", "hex");
 	let y;
 
 	for (let index = 0; index < lastBlockIndex; index++) {
@@ -77,9 +77,9 @@ export function aesCmac(key, message) {
 }
 
 function getMessageBlock(message, blockIndex) {
-	const block = new Buffer(const_blockSize);
-	const start = blockIndex * const_blockSize;
-	const end = start + const_blockSize;
+	const block = new Buffer(blockSize);
+	const start = blockIndex * blockSize;
+	const end = start + blockSize;
 
 	message.copy(block, 0, start, end);
 
@@ -87,8 +87,8 @@ function getMessageBlock(message, blockIndex) {
 }
 
 function getPaddedMessageBlock(message, blockIndex) {
-	const block = new Buffer(const_blockSize);
-	const start = blockIndex * const_blockSize;
+	const block = new Buffer(blockSize);
+	const start = blockIndex * blockSize;
 	const end = message.length;
 
 	block.fill(0);
