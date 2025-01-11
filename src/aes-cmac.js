@@ -7,22 +7,31 @@ const zero = Buffer.from("00000000000000000000000000000000", "hex");
 const rb = Buffer.from("00000000000000000000000000000087", "hex");
 const blockSize = 16;
 
-export function generateSubkeys(key) {
+/**
+ * @param {Buffer} key
+ * @returns {{ subKey1: Buffer, subKey2: Buffer }}
+ */
+export function generateSubKeys(key) {
 	const l = aes(key, zero);
 
-	let subkey1 = bufferTools.bitShiftLeft(l);
+	let subKey1 = bufferTools.bitShiftLeft(l);
 	if (l[0] & 0x80) {
-		subkey1 = bufferTools.xor(subkey1, rb);
+		subKey1 = bufferTools.xor(subKey1, rb);
 	}
 
-	let subkey2 = bufferTools.bitShiftLeft(subkey1);
-	if (subkey1[0] & 0x80) {
-		subkey2 = bufferTools.xor(subkey2, rb);
+	let subKey2 = bufferTools.bitShiftLeft(subKey1);
+	if (subKey1[0] & 0x80) {
+		subKey2 = bufferTools.xor(subKey2, rb);
 	}
 
-	return { subkey1: subkey1, subkey2: subkey2 };
+	return { subKey1, subKey2 };
 }
 
+/**
+ * @param {Buffer} key
+ * @param {Buffer} message
+ * @returns {Buffer}
+ */
 function aes(key, message) {
 	const keyLengthToCipher = { 16: "aes128", 24: "aes192", 32: "aes256" };
 	if (!keyLengthToCipher[key.length]) {
@@ -38,8 +47,13 @@ function aes(key, message) {
 	return result;
 }
 
+/**
+ * @param {Buffer} key
+ * @param {Buffer} message
+ * @returns {Buffer}
+ */
 export function aesCmac(key, message) {
-	const subkeys = generateSubkeys(key);
+	const { subKey1, subKey2 } = generateSubKeys(key);
 	let blockCount = Math.ceil(message.length / blockSize);
 	let lastBlockCompleteFlag;
 	let lastBlock;
@@ -56,12 +70,12 @@ export function aesCmac(key, message) {
 	if (lastBlockCompleteFlag) {
 		lastBlock = bufferTools.xor(
 			getMessageBlock(message, lastBlockIndex),
-			subkeys.subkey1,
+			subKey1,
 		);
 	} else {
 		lastBlock = bufferTools.xor(
 			getPaddedMessageBlock(message, lastBlockIndex),
-			subkeys.subkey2,
+			subKey2,
 		);
 	}
 
@@ -72,10 +86,16 @@ export function aesCmac(key, message) {
 		y = bufferTools.xor(x, getMessageBlock(message, index));
 		x = aes(key, y);
 	}
+
 	y = bufferTools.xor(lastBlock, x);
 	return aes(key, y);
 }
 
+/**
+ * @param {Buffer} message
+ * @param {number} blockIndex
+ * @returns {Buffer}
+ */
 function getMessageBlock(message, blockIndex) {
 	const block = Buffer.alloc(blockSize);
 	const start = blockIndex * blockSize;
@@ -86,6 +106,11 @@ function getMessageBlock(message, blockIndex) {
 	return block;
 }
 
+/**
+ * @param {Buffer} message
+ * @param {number} blockIndex
+ * @returns {Buffer}
+ */
 function getPaddedMessageBlock(message, blockIndex) {
 	const block = Buffer.alloc(blockSize, 0);
 	const start = blockIndex * blockSize;
