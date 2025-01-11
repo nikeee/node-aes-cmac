@@ -2,14 +2,14 @@
 import * as assert from "node:assert";
 import { describe, it } from "node:test";
 
-import * as index from "./index.js";
+import aesCmac from "./index.js";
 
 describe("index (module entry point)", () => {
 	describe("aesCmac(key, message)", () => {
 		it("performs the AES-CMAC algorithm", () => {
 			const key = Buffer.from("2b7e151628aed2a6abf7158809cf4f3c", "hex");
 			const message = Buffer.from("6bc1bee22e409f96e93d7e117393172a", "hex");
-			const result = index.aesCmac(key, message);
+			const result = aesCmac(key, message);
 			assert.deepEqual(
 				Buffer.from("070a16b46b4d4144f79bdd9dd04a287c", "hex"),
 				result,
@@ -41,7 +41,7 @@ describe("index (module entry point)", () => {
 		function assertAesCmacError(key, message, expectedErrorMessage) {
 			assert.throws(
 				() => {
-					index.aesCmac(key, message);
+					aesCmac(key, message);
 				},
 				error => {
 					assert.equal(error.message, expectedErrorMessage);

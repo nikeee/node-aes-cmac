@@ -7,7 +7,7 @@ import { aesCmac as _aesCmac } from "./aes-cmac.js";
  * @param {Buffer} message
  * @returns {Buffer}
  */
-export function aesCmac(key, message) {
+export default function aesCmac(key, message) {
 	if (!(key instanceof Buffer)) {
 		throw new Error("Keys must be provided as a Buffer.");
 	}
