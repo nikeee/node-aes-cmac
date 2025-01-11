@@ -1,9 +1,9 @@
-var aesCmac = require("../lib/aes-cmac.js");
-var assert = require("assert");
+const aesCmac = require("../lib/aes-cmac.js");
+const assert = require("assert");
 
 describe("aes-cmac", () => {
 	describe("NIST 800-38B test vectors", () => {
-		var keys = {
+		const keys = {
 			128: new Buffer("2b7e151628aed2a6abf7158809cf4f3c", "hex"),
 			192: new Buffer(
 				"8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b",
@@ -17,36 +17,36 @@ describe("aes-cmac", () => {
 
 		describe("generateSubkeys(key)", () => {
 			it("creates the correct subkeys for a 128 bit key", () => {
-				var expected = {
+				const expected = {
 					subkey1: new Buffer("fbeed618357133667c85e08f7236a8de", "hex"),
 					subkey2: new Buffer("f7ddac306ae266ccf90bc11ee46d513b", "hex"),
 				};
 
-				var result = aesCmac.generateSubkeys(keys["128"]);
+				const result = aesCmac.generateSubkeys(keys["128"]);
 				assert.deepEqual(result, expected);
 			});
 
 			it("creates the correct subkeys for a 192 bit key", () => {
-				var expected = {
+				const expected = {
 					subkey1: new Buffer("448a5b1c93514b273ee6439dd4daa296", "hex"),
 					subkey2: new Buffer("8914b63926a2964e7dcc873ba9b5452c", "hex"),
 				};
-				var result = aesCmac.generateSubkeys(keys["192"]);
+				const result = aesCmac.generateSubkeys(keys["192"]);
 				assert.deepEqual(result, expected);
 			});
 
 			it("creates the correct subkeys for a 256 bit key", () => {
-				var expected = {
+				const expected = {
 					subkey1: new Buffer("cad1ed03299eedac2e9a99808621502f", "hex"),
 					subkey2: new Buffer("95a3da06533ddb585d3533010c42a0d9", "hex"),
 				};
-				var result = aesCmac.generateSubkeys(keys["256"]);
+				const result = aesCmac.generateSubkeys(keys["256"]);
 				assert.deepEqual(result, expected);
 			});
 		});
 
 		describe("aesCmac(key, message)", () => {
-			var messages = {
+			const messages = {
 				length0: new Buffer("", "hex"),
 				length128: new Buffer("6bc1bee22e409f96e93d7e117393172a", "hex"),
 				length320: new Buffer(
@@ -62,7 +62,7 @@ describe("aes-cmac", () => {
 			};
 
 			it("generates the authentiation code for length 0 input, 128 bit key", () => {
-				var result = aesCmac.aesCmac(keys["128"], messages.length0);
+				const result = aesCmac.aesCmac(keys["128"], messages.length0);
 				assert.equal(
 					result.toString("hex"),
 					"bb1d6929e95937287fa37d129b756746",
@@ -70,7 +70,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentiation code for length 0 input, 192 bit key", () => {
-				var result = aesCmac.aesCmac(keys["192"], messages.length0);
+				const result = aesCmac.aesCmac(keys["192"], messages.length0);
 				assert.equal(
 					result.toString("hex"),
 					"d17ddf46adaacde531cac483de7a9367",
@@ -78,7 +78,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentiation code for length 0 input, 256 bit key", () => {
-				var result = aesCmac.aesCmac(keys["256"], messages.length0);
+				const result = aesCmac.aesCmac(keys["256"], messages.length0);
 				assert.equal(
 					result.toString("hex"),
 					"028962f61b7bf89efc6b551f4667d983",
@@ -86,7 +86,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 128 input, 128 bit key", () => {
-				var result = aesCmac.aesCmac(keys["128"], messages.length128);
+				const result = aesCmac.aesCmac(keys["128"], messages.length128);
 				assert.equal(
 					result.toString("hex"),
 					"070a16b46b4d4144f79bdd9dd04a287c",
@@ -94,7 +94,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 128 input, 192 bit key", () => {
-				var result = aesCmac.aesCmac(keys["192"], messages.length128);
+				const result = aesCmac.aesCmac(keys["192"], messages.length128);
 				assert.equal(
 					result.toString("hex"),
 					"9e99a7bf31e710900662f65e617c5184",
@@ -102,7 +102,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 128 input, 256 bit key", () => {
-				var result = aesCmac.aesCmac(keys["256"], messages.length128);
+				const result = aesCmac.aesCmac(keys["256"], messages.length128);
 				assert.equal(
 					result.toString("hex"),
 					"28a7023f452e8f82bd4bf28d8c37c35c",
@@ -110,7 +110,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 320 input, 128 bit key", () => {
-				var result = aesCmac.aesCmac(keys["128"], messages.length320);
+				const result = aesCmac.aesCmac(keys["128"], messages.length320);
 				assert.equal(
 					result.toString("hex"),
 					"dfa66747de9ae63030ca32611497c827",
@@ -118,7 +118,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 320 input, 192 bit key", () => {
-				var result = aesCmac.aesCmac(keys["192"], messages.length320);
+				const result = aesCmac.aesCmac(keys["192"], messages.length320);
 				assert.equal(
 					result.toString("hex"),
 					"8a1de5be2eb31aad089a82e6ee908b0e",
@@ -126,7 +126,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 320 input, 256 bit key", () => {
-				var result = aesCmac.aesCmac(keys["256"], messages.length320);
+				const result = aesCmac.aesCmac(keys["256"], messages.length320);
 				assert.equal(
 					result.toString("hex"),
 					"aaf3d8f1de5640c232f5b169b9c911e6",
@@ -134,7 +134,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 512 input, 128 bit key", () => {
-				var result = aesCmac.aesCmac(keys["128"], messages.length512);
+				const result = aesCmac.aesCmac(keys["128"], messages.length512);
 				assert.equal(
 					result.toString("hex"),
 					"51f0bebf7e3b9d92fc49741779363cfe",
@@ -142,7 +142,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 512 input, 192 bit key", () => {
-				var result = aesCmac.aesCmac(keys["192"], messages.length512);
+				const result = aesCmac.aesCmac(keys["192"], messages.length512);
 				assert.equal(
 					result.toString("hex"),
 					"a1d5df0eed790f794d77589659f39a11",
@@ -150,7 +150,7 @@ describe("aes-cmac", () => {
 			});
 
 			it("generates the authentication code for length 512 input, 256 bit key", () => {
-				var result = aesCmac.aesCmac(keys["256"], messages.length512);
+				const result = aesCmac.aesCmac(keys["256"], messages.length512);
 				assert.equal(
 					result.toString("hex"),
 					"e1992190549f6ed5696a2c056c315410",
@@ -161,8 +161,8 @@ describe("aes-cmac", () => {
 
 	describe("error handling", () => {
 		it("throws an error if the provided key is not a valid length", () => {
-			var key = new Buffer("abcd");
-			var message = new Buffer("some message");
+			const key = new Buffer("abcd");
+			const message = new Buffer("some message");
 			assert.throws(
 				() => {
 					aesCmac.aesCmac(key, message);

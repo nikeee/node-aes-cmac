@@ -1,19 +1,19 @@
-var index = require("../index.js");
-var assert = require("assert");
+const index = require("../index.js");
+const assert = require("assert");
 
 describe("index (module entry point)", () => {
 	describe("aesCmac(key, message, [options])", () => {
 		it("performs the AES-CMAC algorithm", () => {
-			var key = new Buffer("2b7e151628aed2a6abf7158809cf4f3c", "hex");
-			var message = new Buffer("6bc1bee22e409f96e93d7e117393172a", "hex");
-			var result = index.aesCmac(key, message);
+			const key = new Buffer("2b7e151628aed2a6abf7158809cf4f3c", "hex");
+			const message = new Buffer("6bc1bee22e409f96e93d7e117393172a", "hex");
+			const result = index.aesCmac(key, message);
 			assert.equal(result, "070a16b46b4d4144f79bdd9dd04a287c");
 		});
 
 		it("can take a buffer or string as the key", () => {
-			var stringKey = "averysecretvalue";
-			var bufferKey = new Buffer(stringKey);
-			var message = new Buffer("some message");
+			const stringKey = "averysecretvalue";
+			const bufferKey = new Buffer(stringKey);
+			const message = new Buffer("some message");
 			assert.equal(
 				index.aesCmac(stringKey, message),
 				index.aesCmac(bufferKey, message),
@@ -21,9 +21,9 @@ describe("index (module entry point)", () => {
 		});
 
 		it("can take a buffer or string as the message", () => {
-			var key = "averysecretvalue";
-			var stringMessage = "some message";
-			var bufferMessage = new Buffer(stringMessage);
+			const key = "averysecretvalue";
+			const stringMessage = "some message";
+			const bufferMessage = new Buffer(stringMessage);
 			assert.equal(
 				index.aesCmac(key, stringMessage),
 				index.aesCmac(key, bufferMessage),
@@ -31,10 +31,10 @@ describe("index (module entry point)", () => {
 		});
 
 		it("returns a buffer as the response if options.returnAsBuffer == true", () => {
-			var key = "k3Men*p/2.3j4abB";
-			var message = "this|is|a|test|message";
-			var options = { returnAsBuffer: true };
-			var result = index.aesCmac(key, message, options);
+			const key = "k3Men*p/2.3j4abB";
+			const message = "this|is|a|test|message";
+			const options = { returnAsBuffer: true };
+			const result = index.aesCmac(key, message, options);
 			assert(result instanceof Buffer, "Did not get a Buffer object.");
 			assert.equal(result.toString("hex"), "0125c538f8be7c4eea370f992a4ffdcb");
 		});
@@ -48,13 +48,13 @@ describe("index (module entry point)", () => {
 		});
 
 		it("throws an error if the key is neither Buffer nor string", () => {
-			var expected = "Keys must be provided as a Buffer or string.";
+			const expected = "Keys must be provided as a Buffer or string.";
 			assertAesCmacError(null, "any message", expected);
 			assertAesCmacError(123, "any message", expected);
 		});
 
 		it("throws an error if the message is neither string nor Buffer", () => {
-			var expected = "The message must be provided as a string or Buffer.";
+			const expected = "The message must be provided as a string or Buffer.";
 			assertAesCmacError("averysecretvalue", null, expected);
 			assertAesCmacError("averysecretvalue", {}, expected);
 		});

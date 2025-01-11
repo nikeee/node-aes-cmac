@@ -1,19 +1,19 @@
-var crypto = require("crypto");
-var bufferTools = require("./buffer-tools.js");
+const crypto = require("crypto");
+const bufferTools = require("./buffer-tools.js");
 
-var const_Zero = new Buffer("00000000000000000000000000000000", "hex");
-var const_Rb = new Buffer("00000000000000000000000000000087", "hex");
-var const_blockSize = 16;
+const const_Zero = new Buffer("00000000000000000000000000000000", "hex");
+const const_Rb = new Buffer("00000000000000000000000000000087", "hex");
+const const_blockSize = 16;
 
-exports.generateSubkeys = (key) => {
-	var l = aes(key, const_Zero);
+exports.generateSubkeys = key => {
+	const l = aes(key, const_Zero);
 
-	var subkey1 = bufferTools.bitShiftLeft(l);
+	let subkey1 = bufferTools.bitShiftLeft(l);
 	if (l[0] & 0x80) {
 		subkey1 = bufferTools.xor(subkey1, const_Rb);
 	}
 
-	var subkey2 = bufferTools.bitShiftLeft(subkey1);
+	let subkey2 = bufferTools.bitShiftLeft(subkey1);
 	if (subkey1[0] & 0x80) {
 		subkey2 = bufferTools.xor(subkey2, const_Rb);
 	}
@@ -22,24 +22,24 @@ exports.generateSubkeys = (key) => {
 };
 
 function aes(key, message) {
-	var keyLengthToCipher = { 16: "aes128", 24: "aes192", 32: "aes256" };
+	const keyLengthToCipher = { 16: "aes128", 24: "aes192", 32: "aes256" };
 	if (!keyLengthToCipher[key.length]) {
 		throw new Error("Keys must be 128, 192, or 256 bits in length.");
 	}
-	var cipher = crypto.createCipheriv(
+	const cipher = crypto.createCipheriv(
 		keyLengthToCipher[key.length],
 		key,
 		const_Zero,
 	);
-	var result = cipher.update(message);
+	const result = cipher.update(message);
 	cipher.final();
 	return result;
 }
 
 exports.aesCmac = (key, message) => {
-	var subkeys = exports.generateSubkeys(key);
-	var blockCount = Math.ceil(message.length / const_blockSize);
-	var lastBlockCompleteFlag, lastBlock, lastBlockIndex;
+	const subkeys = exports.generateSubkeys(key);
+	let blockCount = Math.ceil(message.length / const_blockSize);
+	let lastBlockCompleteFlag, lastBlock, lastBlockIndex;
 
 	if (blockCount === 0) {
 		blockCount = 1;
@@ -61,10 +61,10 @@ exports.aesCmac = (key, message) => {
 		);
 	}
 
-	var x = new Buffer("00000000000000000000000000000000", "hex");
-	var y;
+	let x = new Buffer("00000000000000000000000000000000", "hex");
+	let y;
 
-	for (var index = 0; index < lastBlockIndex; index++) {
+	for (let index = 0; index < lastBlockIndex; index++) {
 		y = bufferTools.xor(x, getMessageBlock(message, index));
 		x = aes(key, y);
 	}
@@ -73,9 +73,9 @@ exports.aesCmac = (key, message) => {
 };
 
 function getMessageBlock(message, blockIndex) {
-	var block = new Buffer(const_blockSize);
-	var start = blockIndex * const_blockSize;
-	var end = start + const_blockSize;
+	const block = new Buffer(const_blockSize);
+	const start = blockIndex * const_blockSize;
+	const end = start + const_blockSize;
 
 	message.copy(block, 0, start, end);
 
@@ -83,9 +83,9 @@ function getMessageBlock(message, blockIndex) {
 }
 
 function getPaddedMessageBlock(message, blockIndex) {
-	var block = new Buffer(const_blockSize);
-	var start = blockIndex * const_blockSize;
-	var end = message.length;
+	const block = new Buffer(const_blockSize);
+	const start = blockIndex * const_blockSize;
+	const end = message.length;
 
 	block.fill(0);
 	message.copy(block, 0, start, end);

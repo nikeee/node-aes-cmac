@@ -1,10 +1,10 @@
-var aesCmac = require("./aes-cmac.js").aesCmac;
+const aesCmac = require("./aes-cmac.js").aesCmac;
 
 exports.aesCmac = (key, message, options) => {
 	validateKey(key);
-	var messageBuffer = validateMessage(message);
+	const messageBuffer = validateMessage(message);
 	options = options ? options : {};
-	var result = aesCmac(key, messageBuffer);
+	const result = aesCmac(key, messageBuffer);
 	return options.returnAsBuffer ? result : result.toString("hex");
 };
 

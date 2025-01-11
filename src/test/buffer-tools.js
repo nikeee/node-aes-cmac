@@ -1,5 +1,5 @@
-var bufferTools = require("../lib/buffer-tools.js");
-var assert = require("assert");
+const bufferTools = require("../lib/buffer-tools.js");
+const assert = require("assert");
 
 describe("buffer-tools", () => {
 	describe("bitShiftLeft", () => {
