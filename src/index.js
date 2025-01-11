@@ -2,22 +2,17 @@
 
 import { aesCmac as _aesCmac } from "./aes-cmac.js";
 
-export function aesCmac(key, message, options = {}) {
-	validateKey(key);
-	const messageBuffer = validateMessage(message);
-	const result = _aesCmac(key, messageBuffer);
-	return options.returnAsBuffer ? result : result.toString("hex");
-}
-
-function validateKey(key) {
-	if (typeof key !== "string" && !(key instanceof Buffer)) {
-		throw new Error("Keys must be provided as a Buffer or string.");
+/**
+ * @param {Buffer} key
+ * @param {Buffer} message
+ * @returns {Buffer}
+ */
+export function aesCmac(key, message) {
+	if (!(key instanceof Buffer)) {
+		throw new Error("Keys must be provided as a Buffer.");
 	}
-}
-
-function validateMessage(message) {
-	if (typeof message !== "string" && !(message instanceof Buffer)) {
-		throw new Error("The message must be provided as a string or Buffer.");
+	if (!(message instanceof Buffer)) {
+		throw new Error("The message must be provided as a Buffer.");
 	}
-	return message instanceof Buffer ? message : Buffer.from(message);
+	return _aesCmac(key, message);
 }
