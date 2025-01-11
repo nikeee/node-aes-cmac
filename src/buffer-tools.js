@@ -1,7 +1,7 @@
 // @ts-check
 
 export function bitShiftLeft(buffer) {
-	const shifted = new Buffer(buffer.length);
+	const shifted = Buffer.alloc(buffer.length);
 	const last = buffer.length - 1;
 	for (let index = 0; index < last; index++) {
 		shifted[index] = buffer[index] << 1;
@@ -15,7 +15,7 @@ export function bitShiftLeft(buffer) {
 
 export function xor(bufferA, bufferB) {
 	const length = Math.min(bufferA.length, bufferB.length);
-	const output = new Buffer(length);
+	const output = Buffer.alloc(length);
 	for (let index = 0; index < length; index++) {
 		output[index] = bufferA[index] ^ bufferB[index];
 	}
