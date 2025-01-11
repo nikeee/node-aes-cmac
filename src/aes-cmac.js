@@ -77,7 +77,7 @@ export function aesCmac(key, message) {
 }
 
 function getMessageBlock(message, blockIndex) {
-	const block = new Buffer(blockSize);
+	const block = Buffer.alloc(blockSize);
 	const start = blockIndex * blockSize;
 	const end = start + blockSize;
 
@@ -87,11 +87,10 @@ function getMessageBlock(message, blockIndex) {
 }
 
 function getPaddedMessageBlock(message, blockIndex) {
-	const block = new Buffer(blockSize);
+	const block = Buffer.alloc(blockSize, 0);
 	const start = blockIndex * blockSize;
 	const end = message.length;
 
-	block.fill(0);
 	message.copy(block, 0, start, end);
 	block[end - start] = 0x80;
 
