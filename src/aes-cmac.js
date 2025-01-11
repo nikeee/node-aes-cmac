@@ -33,7 +33,11 @@ export function generateSubKeys(key) {
  * @returns {Buffer}
  */
 function aes(key, message) {
-	const keyLengthToCipher = { 16: "aes128", 24: "aes192", 32: "aes256" };
+	const keyLengthToCipher = {
+		16: "aes-128-cbc",
+		24: "aes-192-cbc",
+		32: "aes-256-cbc",
+	};
 	if (!keyLengthToCipher[key.length]) {
 		throw new Error("Keys must be 128, 192, or 256 bits in length.");
 	}
