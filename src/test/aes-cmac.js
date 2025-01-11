@@ -1,5 +1,7 @@
-const aesCmac = require("../lib/aes-cmac.js");
-const assert = require("assert");
+// @ts-check
+import * as assert from "node:assert";
+
+import * as aesCmac from "../aes-cmac.js";
 
 describe("aes-cmac", () => {
 	describe("NIST 800-38B test vectors", () => {

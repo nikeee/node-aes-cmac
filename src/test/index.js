@@ -1,5 +1,7 @@
-const index = require("../index.js");
-const assert = require("assert");
+// @ts-check
+import * as assert from "node:assert";
+
+import * as index from "../index.js";
 
 describe("index (module entry point)", () => {
 	describe("aesCmac(key, message, [options])", () => {

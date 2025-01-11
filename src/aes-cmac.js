@@ -1,11 +1,13 @@
-const crypto = require("crypto");
-const bufferTools = require("./buffer-tools.js");
+// @ts-check
+import * as crypto from "node:crypto";
+
+import * as bufferTools from "./buffer-tools.js";
 
 const const_Zero = new Buffer("00000000000000000000000000000000", "hex");
 const const_Rb = new Buffer("00000000000000000000000000000087", "hex");
 const const_blockSize = 16;
 
-exports.generateSubkeys = key => {
+export function generateSubkeys(key) {
 	const l = aes(key, const_Zero);
 
 	let subkey1 = bufferTools.bitShiftLeft(l);
@@ -19,7 +21,7 @@ exports.generateSubkeys = key => {
 	}
 
 	return { subkey1: subkey1, subkey2: subkey2 };
-};
+}
 
 function aes(key, message) {
 	const keyLengthToCipher = { 16: "aes128", 24: "aes192", 32: "aes256" };
@@ -36,10 +38,12 @@ function aes(key, message) {
 	return result;
 }
 
-exports.aesCmac = (key, message) => {
+export function aesCmac(key, message) {
 	const subkeys = exports.generateSubkeys(key);
 	let blockCount = Math.ceil(message.length / const_blockSize);
-	let lastBlockCompleteFlag, lastBlock, lastBlockIndex;
+	let lastBlockCompleteFlag;
+	let lastBlock;
+	let lastBlockIndex;
 
 	if (blockCount === 0) {
 		blockCount = 1;
@@ -70,7 +74,7 @@ exports.aesCmac = (key, message) => {
 	}
 	y = bufferTools.xor(lastBlock, x);
 	return aes(key, y);
-};
+}
 
 function getMessageBlock(message, blockIndex) {
 	const block = new Buffer(const_blockSize);

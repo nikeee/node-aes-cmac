@@ -1,5 +1,7 @@
-const bufferTools = require("../lib/buffer-tools.js");
-const assert = require("assert");
+// @ts-check
+import * as assert from "node:assert";
+
+import * as bufferTools from "../buffer-tools.js";
 
 describe("buffer-tools", () => {
 	describe("bitShiftLeft", () => {

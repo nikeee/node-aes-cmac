@@ -1,12 +1,14 @@
-const aesCmac = require("./aes-cmac.js").aesCmac;
+// @ts-check
 
-exports.aesCmac = (key, message, options) => {
+import { aesCmac as _aesCmac } from "./aes-cmac.js";
+
+export function aesCmac(key, message, options) {
 	validateKey(key);
 	const messageBuffer = validateMessage(message);
 	options = options ? options : {};
-	const result = aesCmac(key, messageBuffer);
+	const result = _aesCmac(key, messageBuffer);
 	return options.returnAsBuffer ? result : result.toString("hex");
-};
+}
 
 function validateKey(key) {
 	if (typeof key !== "string" && !(key instanceof Buffer)) {
