@@ -30,19 +30,3 @@ export function xor(a, b) {
 	}
 	return output;
 }
-
-const bitMasks = [0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01];
-
-/**
- * @param {Buffer} buffer
- * @returns {string}
- */
-export function toBinaryString(buffer) {
-	let binary = "";
-	for (let bufferIndex = 0; bufferIndex < buffer.length; bufferIndex++) {
-		for (let bitmaskIndex = 0; bitmaskIndex < bitMasks.length; bitmaskIndex++) {
-			binary += buffer[bufferIndex] & bitMasks[bitmaskIndex] ? "1" : "0";
-		}
-	}
-	return binary;
-}

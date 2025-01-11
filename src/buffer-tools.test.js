@@ -43,19 +43,4 @@ describe("buffer-tools", () => {
 			assert.equal(testXor("123456", "789abc"), "6aaeea");
 		});
 	});
-
-	describe("toBinaryString", () => {
-		function testToBinaryString(input) {
-			return bufferTools.toBinaryString(Buffer.from(input, "hex"));
-		}
-
-		it("returns the binary string representation of a buffer", () => {
-			assert.equal(testToBinaryString("0f"), "00001111");
-			assert.equal(testToBinaryString("5ac3"), "0101101011000011");
-			assert.equal(
-				testToBinaryString("deadbeef"),
-				"11011110101011011011111011101111",
-			);
-		});
-	});
 });
