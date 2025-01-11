@@ -1,7 +1,8 @@
 // @ts-check
 import * as assert from "node:assert";
+import { describe, it } from "node:test";
 
-import * as index from "../index.js";
+import * as index from "./index.js";
 
 describe("index (module entry point)", () => {
 	describe("aesCmac(key, message, [options])", () => {
@@ -37,7 +38,7 @@ describe("index (module entry point)", () => {
 			const message = "this|is|a|test|message";
 			const options = { returnAsBuffer: true };
 			const result = index.aesCmac(key, message, options);
-			assert(result instanceof Buffer, "Did not get a Buffer object.");
+			assert.ok(result instanceof Buffer, "Did not get a Buffer object.");
 			assert.equal(result.toString("hex"), "0125c538f8be7c4eea370f992a4ffdcb");
 		});
 

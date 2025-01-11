@@ -1,7 +1,8 @@
 // @ts-check
 import * as assert from "node:assert";
+import { describe, it } from "node:test";
 
-import * as aesCmac from "../aes-cmac.js";
+import * as aesCmac from "./aes-cmac.js";
 
 describe("aes-cmac", () => {
 	describe("NIST 800-38B test vectors", () => {

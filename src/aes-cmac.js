@@ -39,7 +39,7 @@ function aes(key, message) {
 }
 
 export function aesCmac(key, message) {
-	const subkeys = exports.generateSubkeys(key);
+	const subkeys = generateSubkeys(key);
 	let blockCount = Math.ceil(message.length / blockSize);
 	let lastBlockCompleteFlag;
 	let lastBlock;

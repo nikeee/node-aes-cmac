@@ -1,7 +1,8 @@
 // @ts-check
 import * as assert from "node:assert";
+import { describe, it } from "node:test";
 
-import * as bufferTools from "../buffer-tools.js";
+import * as bufferTools from "./buffer-tools.js";
 
 describe("buffer-tools", () => {
 	describe("bitShiftLeft", () => {
