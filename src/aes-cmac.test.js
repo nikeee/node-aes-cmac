@@ -19,29 +19,29 @@ describe("aes-cmac", () => {
 		};
 
 		describe("generateSubKeys(key)", () => {
-			it("creates the correct subkeys for a 128 bit key", () => {
+			it("creates the correct subKeys for a 128 bit key", () => {
 				const expected = {
-					subkey1: Buffer.from("fbeed618357133667c85e08f7236a8de", "hex"),
-					subkey2: Buffer.from("f7ddac306ae266ccf90bc11ee46d513b", "hex"),
+					subKey1: Buffer.from("fbeed618357133667c85e08f7236a8de", "hex"),
+					subKey2: Buffer.from("f7ddac306ae266ccf90bc11ee46d513b", "hex"),
 				};
 
 				const result = aesCmac.generateSubKeys(keys["128"]);
 				assert.deepEqual(result, expected);
 			});
 
-			it("creates the correct subkeys for a 192 bit key", () => {
+			it("creates the correct subKeys for a 192 bit key", () => {
 				const expected = {
-					subkey1: Buffer.from("448a5b1c93514b273ee6439dd4daa296", "hex"),
-					subkey2: Buffer.from("8914b63926a2964e7dcc873ba9b5452c", "hex"),
+					subKey1: Buffer.from("448a5b1c93514b273ee6439dd4daa296", "hex"),
+					subKey2: Buffer.from("8914b63926a2964e7dcc873ba9b5452c", "hex"),
 				};
 				const result = aesCmac.generateSubKeys(keys["192"]);
 				assert.deepEqual(result, expected);
 			});
 
-			it("creates the correct subkeys for a 256 bit key", () => {
+			it("creates the correct subKeys for a 256 bit key", () => {
 				const expected = {
-					subkey1: Buffer.from("cad1ed03299eedac2e9a99808621502f", "hex"),
-					subkey2: Buffer.from("95a3da06533ddb585d3533010c42a0d9", "hex"),
+					subKey1: Buffer.from("cad1ed03299eedac2e9a99808621502f", "hex"),
+					subKey2: Buffer.from("95a3da06533ddb585d3533010c42a0d9", "hex"),
 				};
 				const result = aesCmac.generateSubKeys(keys["256"]);
 				assert.deepEqual(result, expected);
