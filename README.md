@@ -30,7 +30,7 @@ npm install node-aes-cmac
 ```
 
 ## Usage
-The module exposes a single method: `aesCmac(key, message[, options])`
+The module exposes a single method: `aesCmac(key, message)`
 
 ### Arguments
 * `key` - (`Buffer`) the cryptographic key to use for the operation.
