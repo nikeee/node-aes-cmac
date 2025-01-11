@@ -24,3 +24,8 @@ jobs:
     - run: npm test
       env:
         CI: true
+
+    - uses: nikeee/tap-summary@dist
+      continue-on-error: true
+      if: always()
+
