@@ -12,7 +12,7 @@ describe("buffer-tools", () => {
 				.toString("hex");
 		}
 
-		it("returns a buffer bitshifted left 1 bit (buffer_value << 1)", () => {
+		it("returns a buffer bit shifted left 1 bit (buffer_value << 1)", () => {
 			assert.equal(testBitShiftLeft("01"), "02");
 			assert.equal(testBitShiftLeft("02"), "04");
 			assert.equal(testBitShiftLeft("04"), "08");
