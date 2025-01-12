@@ -2,3 +2,4 @@ node_modules
 .github
 .vscode
 biome.json
+*.test.js
