@@ -26,7 +26,7 @@ Hard-fork of [allan-stewart/node-aes-cmac](https://github.com/allan-stewart/node
 
 ## Installation
 ```sh
-npm install node-aes-cmac
+npm install @nikeee/aes-cmac
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ The method normally returns the CMAC as a `Buffer`.
 
 ### Example
 ```js
-import aesCmac from "node-aes-cmac";
+import aesCmac from "@nikeee/aes-cmac";
 
 const key = Buffer.from("k3Men*p/2.3j4abB");
 const message = Buffer.from("this|is|a|test|message");
