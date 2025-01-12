@@ -57,6 +57,13 @@ function aes(key, message) {
  * @returns {Buffer}
  */
 export function aesCmac(key, message) {
+	if (!(key instanceof Buffer)) {
+		throw new Error("`key` must be provided as a Buffer.");
+	}
+	if (!(message instanceof Buffer)) {
+		throw new Error("`message` must be provided as a Buffer.");
+	}
+
 	const { subKey1, subKey2 } = generateSubKeys(key);
 	let blockCount = Math.ceil(message.length / blockSize);
 	let lastBlockCompleteFlag;
