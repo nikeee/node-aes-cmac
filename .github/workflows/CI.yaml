@@ -21,7 +21,7 @@ jobs:
 
     - run: npm ci
     - run: npm run ci
-    - run: npm test
+    - run: npm test -- --test-reporter=tap >> results.tap
       env:
         CI: true
 
