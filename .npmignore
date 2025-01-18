@@ -4,3 +4,4 @@ node_modules
 biome.json
 *.test.js
 *.md
+.editorconfig
