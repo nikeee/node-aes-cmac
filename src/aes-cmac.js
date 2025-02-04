@@ -39,9 +39,6 @@ export function generateSubKeys(key) {
  * @returns {Buffer}
  */
 function aes(key, message) {
-	if (!keyLengthToCipher[key.length]) {
-		throw new Error("Keys must be 128, 192, or 256 bits in length.");
-	}
 	if (message.byteLength !== 16) {
 		throw new Error("message length has to be exactly one block.");
 	}
@@ -62,6 +59,9 @@ function aes(key, message) {
 export function aesCmac(key, message) {
 	if (!(key instanceof Buffer)) {
 		throw new Error("`key` must be provided as a Buffer.");
+	}
+	if (!keyLengthToCipher[key.length]) {
+		throw new Error("Keys must be 128, 192, or 256 bits in length.");
 	}
 	if (!(message instanceof Buffer)) {
 		throw new Error("`message` must be provided as a Buffer.");
