@@ -5,3 +5,4 @@ biome.json
 *.test.js
 *.md
 .editorconfig
+/src/benchmark
