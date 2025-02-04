@@ -8,9 +8,9 @@ const rb = Buffer.from("00000000000000000000000000000087", "hex");
 const blockSize = 16;
 
 const keyLengthToCipher = {
-	16: "aes-128-cbc",
-	24: "aes-192-cbc",
-	32: "aes-256-cbc",
+	16: "aes-128-ecb",
+	24: "aes-192-ecb",
+	32: "aes-256-ecb",
 };
 
 /**
@@ -42,14 +42,16 @@ function aes(key, message) {
 	if (!keyLengthToCipher[key.length]) {
 		throw new Error("Keys must be 128, 192, or 256 bits in length.");
 	}
+	if (message.byteLength !== 16) {
+		throw new Error("message length has to be exactly one block.");
+	}
 	const cipher = crypto.createCipheriv(
 		keyLengthToCipher[key.length],
 		key,
-		zero,
+		null,
 	);
-	const result = cipher.update(message);
-	cipher.final();
-	return result;
+	cipher.setAutoPadding(false);
+	return cipher.update(message);
 }
 
 /**
