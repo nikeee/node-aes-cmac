@@ -3,7 +3,7 @@ import * as crypto from "node:crypto";
 
 import * as bufferTools from "./buffer-tools.js";
 
-const zero = Buffer.from("00000000000000000000000000000000", "hex");
+const zero = Buffer.alloc(16);
 const rb = Buffer.from("00000000000000000000000000000087", "hex");
 const blockSize = 16;
 
@@ -91,7 +91,7 @@ export function aesCmac(key, message) {
 		);
 	}
 
-	let x = Buffer.from("00000000000000000000000000000000", "hex");
+	let x = Buffer.alloc(16);
 	let y;
 
 	for (let index = 0; index < lastBlockIndex; index++) {
