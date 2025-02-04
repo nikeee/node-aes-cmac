@@ -7,6 +7,12 @@ const zero = Buffer.from("00000000000000000000000000000000", "hex");
 const rb = Buffer.from("00000000000000000000000000000087", "hex");
 const blockSize = 16;
 
+const keyLengthToCipher = {
+	16: "aes-128-cbc",
+	24: "aes-192-cbc",
+	32: "aes-256-cbc",
+};
+
 /**
  * @param {Buffer} key
  * @returns {{ subKey1: Buffer, subKey2: Buffer }}
@@ -33,11 +39,6 @@ export function generateSubKeys(key) {
  * @returns {Buffer}
  */
 function aes(key, message) {
-	const keyLengthToCipher = {
-		16: "aes-128-cbc",
-		24: "aes-192-cbc",
-		32: "aes-256-cbc",
-	};
 	if (!keyLengthToCipher[key.length]) {
 		throw new Error("Keys must be 128, 192, or 256 bits in length.");
 	}
