@@ -14,7 +14,7 @@ bench.add("mac generation", () => {
 	for (let k = 0; k < keys.length; ++k) {
 		const key = keys[k];
 		for (let m = 0; m < messages.length; ++m) {
-			const cmac = aesCmac(key, messages[m]);
+			const _cmac = aesCmac(key, messages[m]);
 		}
 	}
 });
