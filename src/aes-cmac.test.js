@@ -172,7 +172,7 @@ describe("aes-cmac", () => {
 				},
 				error => {
 					assert.equal(
-						// @ts-ignore
+						// @ts-expect-error
 						error.message,
 						"Keys must be 128, 192, or 256 bits in length.",
 					);

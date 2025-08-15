@@ -44,7 +44,7 @@ describe("index (module entry point)", () => {
 					aesCmac(key, message);
 				},
 				error => {
-					// @ts-ignore
+					// @ts-expect-error
 					assert.equal(error.message, expectedErrorMessage);
 					return true;
 				},
