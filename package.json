@@ -30,8 +30,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
+    "@biomejs/biome": "^2.2.2",
     "@types/node": "^24.3.0",
-    "tinybench": "^4.1.0"
+    "tinybench": "^5.0.1"
   }
 }
